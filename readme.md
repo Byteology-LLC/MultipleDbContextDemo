@@ -6,11 +6,15 @@ As your organization grows and becomes more complex, you may find yourself with 
 ## Source Code
 The source code for this application can be found on GitHub.
 
+---
+
 # Requirements
 The following tools are needed to run the solution:
 - .NET 6.0 SDK
 - MongoDB Server (with MongoDb Compass)
 - SQL Server (with SQL Server Management Studio)
+
+---
 
 # Development
 ## Create the project
@@ -446,7 +450,9 @@ In your editor, open the `MultipleDbContextDemo.Web.csproj` file and add the fol
 ### Add references to the `MultipleDbContextDemoWebModule.cs` file
 In your editor, open the `MultipleDbContextDemoWebModule.cs` file and add the following lines:
 - In the using clauses at the top, add: `using MultipleDbContextDemo.MongoDb;`
-- Directly above the class declaration, below the existing DependsOn statement (you can also just add it into the existing one if you prefer), add: `[DependsOn(typeof(MultipleDbContextDemoMongoDbModule))]`
+- Directly above the class declaration, and **above** the existing DependsOn statement (you can also just add it into the existing one if you prefer), add: `[DependsOn(typeof(MultipleDbContextDemoMongoDbModule))]`
+
+**IMPORTANT: Whatever DBMS you plan on using for your "Default" connection string must come LAST in the `DependsOn` statement**
 
 With those added, your project should now be aware of the new DbContext and it should be ready to use in code. Next, we need to update the DbMigrator project so it, too, is aware of the new DbContext.
 
@@ -464,7 +470,9 @@ In your editor, open the `MultipleDbContextDemo.DbMigrator.csproj` file and add 
 ### Add references to the `MultipleDbContextDemoDbMigratorModule.cs` file
 In your editor, open the `MultipleDbContextDemoDbMigratorModule.cs` file inside the `MultipleDbContextDemo.DbMigrator` project and add the following lines:
 - In the using clauses at the top, add: `using MultipleDbContextDemo.MongoDb;`
-- Directly above the class declaration, below the existing DependsOn statement (you can also just add it into the existing one if you prefer), add: `[DependsOn(typeof(MultipleDbContextDemoMongoDbModule))]`
+- Directly above the class declaration, and **above** the existing DependsOn statement (you can also just add it into the existing one if you prefer), add: `[DependsOn(typeof(MultipleDbContextDemoMongoDbModule))]`
+
+**IMPORTANT: Whatever DBMS you plan on using for your "Default" connection string must come LAST in the `DependsOn` statement**
 
 ## Build your solution and run the DbMigrator to seed the databases.
 Build your solution to ensure that you aren't getting any errors, then right-click on the `MultipleDbContextDemo.DbMigrator` project and choose the "Debug -> Start New Instance". This will run the debug program and seed your databases.
