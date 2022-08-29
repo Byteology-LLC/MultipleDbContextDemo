@@ -1,20 +1,14 @@
-Using Multiple DbContexts within ABP Framework
-
 # Introduction
 
 As your organization grows and becomes more complex, you may find yourself with multiple database platforms servicing different needs. For example, maybe you want to leverage a NoSQL approach on your reporting entities to leverage the speed and dynamic object flexibility of that platform while maintaining your more structured data elements inside a traditional SQL solution. This article is designed to walk you through the basic steps to extend your ABP Framework solution and to take advantage of a multi-database architecture.
 ## Source Code
-The source code for this application can be found on GitHub.
-
----
+The source code for this application can be found on [GitHub](https://github.com/Byteology-LLC/MultipleDbContextDemo).
 
 # Requirements
 The following tools are needed to run the solution:
 - .NET 6.0 SDK
 - MongoDB Server (with MongoDb Compass)
 - SQL Server (with SQL Server Management Studio)
-
----
 
 # Development
 ## Create the project
@@ -301,6 +295,7 @@ namespace MultipleDbContextDemo.DataElements
 
 ## Add the MongoDb Project
 I don't believe it is strictly necessary to create a new project for the MongoDb architecture, but in order to keep the the code structured neatly we are going to do so. 
+
 **ProTip:** you can create a new project with the same name in a different folder using the following command and copy the MongoDb project from there: `abp new MultipleDbContextDemo -t app -u mvc --mobile none --database-provider mongodb -csf`.
 For our purposes, we are going to go through it explicitly
 
@@ -326,7 +321,7 @@ I won't go into detail here about what each line of this file does in this artic
 </ItemGroup>
 ```
 
-**Additional Note:** If you are using the commercial version of the framework, your package list will be different:
+**Commercial Note:** If you are using the commercial version of the framework, your package list will be different:
 ```
 <ItemGroup>
     <ProjectReference Include="..\MultipleDbContextDemo.Domain\MultipleDbContextDemo.Domain.csproj" />
