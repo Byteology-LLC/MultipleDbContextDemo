@@ -306,34 +306,12 @@ Choose the 'Class Library' project type and call it `MultipleDbContextDemo.Mongo
 When the project is created. Delete the default `Class1.cs` file and move to the next step.
 
 ### Update the `MultipleDbContextDemo.MongoDb.csproj` with the necessary references
-I won't go into detail here about what each line of this file does in this article, but add the following lines to your csproj file inside the `<Property>` tag:
+Add the following lines to your csproj file inside the `<Project>` tag:
 ```
 <ItemGroup>
     <ProjectReference Include="..\MultipleDbContextDemo.Domain\MultipleDbContextDemo.Domain.csproj" />
-    <PackageReference Include="Volo.Abp.PermissionManagement.MongoDB" Version="5.3.4" />
-    <PackageReference Include="Volo.Abp.SettingManagement.MongoDB" Version="5.3.4" />
-    <PackageReference Include="Volo.Abp.Identity.MongoDB" Version="5.3.4" />
-    <PackageReference Include="Volo.Abp.IdentityServer.MongoDB" Version="5.3.4" />
-    <PackageReference Include="Volo.Abp.BackgroundJobs.MongoDB" Version="5.3.4" />
-    <PackageReference Include="Volo.Abp.AuditLogging.MongoDB" Version="5.3.4" />
-    <PackageReference Include="Volo.Abp.TenantManagement.MongoDB" Version="5.3.4" />
-    <PackageReference Include="Volo.Abp.FeatureManagement.MongoDB" Version="5.3.4" />
+    <PackageReference Include="Volo.Abp.MongoDB" Version="5.3.4" />
 </ItemGroup>
-```
-
-**Commercial Note:** If you are using the commercial version of the framework, your package list will be different:
-```
-<ItemGroup>
-    <ProjectReference Include="..\MultipleDbContextDemo.Domain\MultipleDbContextDemo.Domain.csproj" />
-    <PackageReference Include="Volo.Abp.PermissionManagement.MongoDB" Version="5.3.4" />
-    <PackageReference Include="Volo.Abp.SettingManagement.MongoDB" Version="5.3.4" />
-    <PackageReference Include="Volo.Abp.IdentityServer.MongoDB" Version="5.3.4" />
-    <PackageReference Include="Volo.Abp.BackgroundJobs.MongoDB" Version="5.3.4" />
-    <PackageReference Include="Volo.Abp.AuditLogging.MongoDB" Version="5.3.4" />
-    <PackageReference Include="Volo.Abp.FeatureManagement.MongoDB" Version="5.3.4" />
-    <PackageReference Include="Volo.Abp.Identity.Pro.MongoDB" Version="5.3.4" />
-    <PackageReference Include="Volo.Saas.MongoDB" Version="5.3.4" />
-  </ItemGroup>
 ```
 
 Once you update those, create a new directory under the root of the project called `MongoDb`. This is where we will store the class files for this project (mimicking the structure of a new ABP project). Once that is created, continue onto the next step.
@@ -370,30 +348,17 @@ In the `MongoDb` directory, create a new class called `MultipleDbContextDemoMong
 
 ```
 using Microsoft.Extensions.DependencyInjection;
-using Volo.Abp.AuditLogging.MongoDB;
-using Volo.Abp.BackgroundJobs.MongoDB;
-using Volo.Abp.FeatureManagement.MongoDB;
-using Volo.Abp.Identity.MongoDB;
-using Volo.Abp.IdentityServer.MongoDB;
+using Volo.Abp.Data;
 using Volo.Abp.Modularity;
-using Volo.Abp.PermissionManagement.MongoDB;
-using Volo.Abp.SettingManagement.MongoDB;
-using Volo.Abp.TenantManagement.MongoDB;
+using Volo.Abp.MongoDB;
 using Volo.Abp.Uow;
 
 namespace MultipleDbContextDemo.MongoDb;
 
 [DependsOn(
-    typeof(MultipleDbContextDemoDomainModule),
-    typeof(AbpPermissionManagementMongoDbModule),
-    typeof(AbpSettingManagementMongoDbModule),
-    typeof(AbpIdentityMongoDbModule),
-    typeof(AbpIdentityServerMongoDbModule),
-    typeof(AbpBackgroundJobsMongoDbModule),
-    typeof(AbpAuditLoggingMongoDbModule),
-    typeof(AbpTenantManagementMongoDbModule),
-    typeof(AbpFeatureManagementMongoDbModule)
+    typeof(MultipleDbContextDemoDomainModule)
     )]
+[DependsOn(typeof(AbpMongoDbModule))]
 public class MultipleDbContextDemoMongoDbModule : AbpModule
 {
     public override void ConfigureServices(ServiceConfigurationContext context)
